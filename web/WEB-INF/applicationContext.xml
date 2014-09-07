@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:b="http://www.springframework.org/schema/beans"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+    <http auto-config="true" access-denied-page="/negado.xhtml">
+        
+        
+        <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?error=true" />
+        <logout logout-success-url="/login.xhtml" /> 
+        <!--<intercept-url pattern="/**" access="ROLE_USER" />-->       
+        <intercept-url pattern="/template.xhtml" access="ROLE_USER" />       
+
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder hash="md5"/>
+            <jdbc-user-service data-source-ref="dataSource"
+                                           users-by-username-query="SELECT usuario, senha, enable FROM usuario WHERE usuario=?"
+                                           authorities-by-username-query="SELECT v.usuario AS username, auto.nome AS authority FROM usuario_autorizacao a inner join usuario v on v.id = a.usuario_id inner join autorizacao auto on a.autorizacoes_id = auto.id WHERE v.usuario=?" />
+        </authentication-provider>
+    </authentication-manager>
+
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="url" value="jdbc:derby://localhost:1527/sistema" />
+        <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+        <b:property name="username" value="sistema" />
+        <b:property name="password" value="sistema" />
+    </b:bean>
+</b:beans>
