@@ -31,7 +31,7 @@ public class UsuarioLogado implements Serializable{
             if (authentication instanceof Authentication) {
                 //usuarioLogado.setUsuario(((User) authentication.getPrincipal()).getUsername());
                 System.out.println((authentication.getPrincipal()));
-                this.usuarioLogado = usuarioFacade.usuarioLogin(((User) authentication.getPrincipal()).getUsername().toString());
+                this.usuarioLogado.setUsuario(((User) authentication.getPrincipal()).getUsername().toString());
             }
         }
     }
