@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <p:panel header="Cadastro de Usuario">
+                <h:form id="formulario">                    
+                    <p:messages showDetail="false"/>
+                    <h:inputHidden id="cod" value="#{usuarioControle.usuario.id}" />
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Nome:"/>
+                        <p:inputText id="nome" value="#{usuarioControle.usuario.nome}" size="70"/>                        
+                        <h:outputText value="CPF:"/>
+                        <p:inputMask id="ccpf" value="#{usuarioControle.usuario.cpf}" size="20" mask="999.999.999-99"/>                      
+                        <h:outputText value="Endereço:"/>
+                        <p:inputText id="endereco" value="#{usuarioControle.usuario.endereco}" size="70"/>
+                        <h:outputText value="Bairro:"/>
+                        <p:inputText id="bairro" value="#{usuarioControle.usuario.bairro}" size="40"/>
+                        <h:outputText value="CEP:"/>
+                        <p:inputMask mask="99.999-999" id="cep" value="#{usuarioControle.usuario.cep}" size="7"/>                        
+                        <h:outputText value="E-mail:"/>
+                        <p:inputText id="pagina" value="#{usuarioControle.usuario.email}" size="40"/>
+                        <h:outputText value="Observações:"/>
+                        <p:inputTextarea id="obs" value="#{usuarioControle.usuario.obs}" cols="70"></p:inputTextarea>
+                        <h:outputText value="Usuário:"/>
+                        <p:inputText id="usuarionome" value="#{usuarioControle.usuario.usuario}" size="30"/>                        
+                        <h:outputText value="Senha:"/>
+                        <p:password id="senha" value="#{usuarioControle.usuario.senha}" size="30"/>                        
+                    </h:panelGrid>
+                    <p:commandButton value="Salvar" action="#{usuarioControle.salvar}" ajax="false" icon="ui-icon-disk"/>
+                    <p:commandButton value="Voltar" action="usuariolista" ajax="false" immediate="true" icon="ui-icon-circle-arrow-w"/>
+                    <p:commandButton action="usuarioedita" value="Incluir novo usuario" actionListener="#{usuarioControle.novo}" ajax="false" icon="ui-icon-circle-plus"/>
+                </h:form>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
+

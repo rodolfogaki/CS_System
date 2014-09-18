@@ -68,6 +68,13 @@ public abstract class AbstractFacade<T> {
         q.setParameter("filtro", "%" + s.toLowerCase() + "%");
         return q.getResultList();
     }
-
+    
+        
+    public T usuarioLogin(String login) {
+        Query q = getEntityManager().createQuery(" from Usuario usu where usu.usuario = :usuario");
+        q.setParameter("usuario", login);
+        q.setMaxResults(1);   
+        return (T) q.getSingleResult();    
+    }
 }
 
