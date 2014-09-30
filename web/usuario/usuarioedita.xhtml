@@ -27,9 +27,7 @@
                         <h:outputText value="Observações:"/>
                         <p:inputTextarea id="obs" value="#{usuarioControle.usuario.obs}" cols="70"></p:inputTextarea>
                         <h:outputText value="Usuário:"/>
-                        <p:inputText id="usuarionome" value="#{usuarioControle.usuario.usuario}" size="30"/>                        
-                        <h:outputText value="Senha:"/>
-                        <p:password id="senha" value="#{usuarioControle.usuario.senha}" size="30"/>                        
+                        <p:inputText id="usuarionome" value="#{usuarioControle.usuario.usuario}" size="30"/>                                               
                     </h:panelGrid>
                     <p:commandButton value="Salvar" action="#{usuarioControle.salvar}" ajax="false" icon="ui-icon-disk"/>
                     <p:commandButton value="Voltar" action="usuariolista" ajax="false" immediate="true" icon="ui-icon-circle-arrow-w"/>

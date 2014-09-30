@@ -36,7 +36,9 @@ public class UsuarioLogado implements Serializable{
         }
     }
 
-    
+    public void usuarioLogin(String login){
+        this.usuarioLogado = usuarioFacade.usuarioLogin(login);
+    }        
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }

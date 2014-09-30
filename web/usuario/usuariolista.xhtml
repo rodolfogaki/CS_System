@@ -10,17 +10,17 @@
             <h:form id="formulario">                            
                 
                 <p:panel header="Lista de Usuarios">
-                    <p:dataTable value="#{usuarioControle.lista}" var="p" emptyMessage="Nenhuma usuario encontrada!"
+                    <p:dataTable value="#{usuarioControle.lista}" var="p" emptyMessage="Informe o filtro para consultar!"
                                  paginator="true" rows="10"   id="tabela"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                  rowsPerPageTemplate="10,25,50,100" 
-                                 widgetVar="carsTable" 
+                                 widgetVar="usersTable" 
                                  >
 
                         <f:facet name="header">  
                             <p:outputPanel>  
                                 <h:outputText value="Filtro:" />  
-                                <p:inputText id="globalFilter" onkeyup="carsTable.filter()" size="70"/>  
+                                <p:inputText id="globalFilter" onkeyup="usersTable.filter()" size="70"/>  
                             </p:outputPanel>  
                         </f:facet>  
                         <p:column style="width: 30px">
@@ -31,7 +31,7 @@
                         <p:column id="cnome" headerText="Nome" filterBy="#{p.nome}">
                             <h:outputText value="#{p.nome}"/>
                         </p:column>
-                        <p:column id="ccnpj" headerText="CNPJ" filterBy="#{p.cpf}">
+                        <p:column id="CPF" headerText="CPF" filterBy="#{p.cpf}">
                             <h:outputText value="#{p.cpf}"/>
                         </p:column>                  
                         <p:column headerText="Operações" width="90" >
@@ -39,6 +39,9 @@
                                 <f:attribute value="#{p}" name="usuario"/>
                             </p:commandButton>
                             <p:commandButton icon="ui-icon-closethick" action="usuariolista" actionListener="#{usuarioControle.excluir}" ajax="false" onclick="if(!confirm('Deseja excluir este registro?')) return false;">
+                                <f:attribute value="#{p}" name="usuario"/>
+                            </p:commandButton>
+                            <p:commandButton icon="ui-icon-unlocked" actionListener="#{usuarioControle.reset}" ajax="false" onclick="if(!confirm('Deseja realizar o reset da senha deste usuário?')) return false;" alt="Reset Senha">
                                 <f:attribute value="#{p}" name="usuario"/>
                             </p:commandButton>
                         </p:column>

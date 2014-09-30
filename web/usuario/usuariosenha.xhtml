@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <p:panel header="Alterar Senha">
+                <h:form id="formulario">                    
+                    <p:growl autoUpdate="true"/>
+                    <h:panelGrid columns="2">                      
+                        <h:outputText value="Senha atual:"/>
+                        <p:password id="senhaatual" value="#{usuarioControle.senhaAtual}"       size="30"/>  
+                        <h:outputText value="Nova Senha:"/>
+                        <p:password id="senhanova" value="#{usuarioControle.novaSenha}"         size="30"
+                                    feedback="true" weakLabel="Força da senha : Fraca" goodLabel="Força da senha : Média" strongLabel="Força da senha : Forte"/> 
+                        <h:outputText value="Confirma Senha:"/>
+                        <p:password id="confimasenha" value="#{usuarioControle.confirmaSenha}"  size="30"/> 
+                    </h:panelGrid>
+                    <p:commandButton value="Salvar" actionListener="#{usuarioControle.alterarSenha}"   ajax="false" icon="ui-icon-disk"/>
+                    <p:commandButton value="Voltar" action="/template" ajax="false" immediate="true" icon="ui-icon-circle-arrow-w"/>
+                </h:form>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
+
+

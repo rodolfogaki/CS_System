@@ -11,16 +11,19 @@ import entidades.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import util.Util;
 
 /**
  *
@@ -31,6 +34,10 @@ import org.springframework.security.core.userdetails.User;
 public class UsuarioControle implements Serializable {
 
     private Usuario usuario;
+    private String  senhaAtual;
+    private String  novaSenha;
+    private String  confirmaSenha;
+
     @EJB
     private UsuarioFacade usuarioFacade;
     @EJB
@@ -46,6 +53,7 @@ public class UsuarioControle implements Serializable {
                 Autorizacao auto = new Autorizacao(1L, "ROLE_USER");
                 usuario.getAutorizacoes().add(auto);
                 usuario.setEnable(true);
+                usuario.setSenha(Util.md5("123mudar"));
             }
             usuarioFacade.save(usuario);
             return "usuariolista";
@@ -65,18 +73,42 @@ public class UsuarioControle implements Serializable {
         editando = true;
     }
 
+    public void alterarSenha() {
+        FacesContext context        = FacesContext.getCurrentInstance();
+        ExternalContext external    = context.getExternalContext();
+        this.usuario = usuarioLogin(external.getRemoteUser().toString());
+        if (this.novaSenha.equals(this.confirmaSenha)) {     
+            if (Util.md5(this.senhaAtual.toString()).equals(this.usuario.getSenha().toString()) ){
+                this.usuario.setSenha(Util.md5(this.novaSenha.toString()));
+                usuarioFacade.save(usuario);   
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Senha alterada com sucesso.", "Senha alterada com sucesso."));           
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Senha atual incorreta!", "Senha atual incorreta!"));           
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Senha confirmada incorretamente!", "Senha confirmada incorretamente!"));           
+        }
+    }
+    
     public void excluir(ActionEvent e) {
         usuario = (Usuario) e.getComponent().getAttributes().get("usuario");
         usuarioFacade.remove(usuario);
     }
-
+    
+    public void reset(ActionEvent e) {
+        usuario = (Usuario) e.getComponent().getAttributes().get("usuario");
+        usuario.setSenha(Util.md5("123mudar"));
+        usuarioFacade.save(usuario);
+    }
+    
     public void limpadados() {
         lista = new ArrayList<Usuario>();
         filtro = "";
     }
 
     public List<Usuario> getLista() {
-        return usuarioFacade.findAll();
+        return null;
+        //return usuarioFacade.findAll();
     }
 
     public void setLista(List<Usuario> lista) {
@@ -117,10 +149,6 @@ public class UsuarioControle implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo usuÃ¡rio Ã© obrigatÃ³rio!", "O campo nome Ã© obrigatÃ³rio!"));
             retorno = false;
         }
-        if (usuario.getSenha().equals("")) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo senha Ã© obrigatÃ³rio!", "O campo nome Ã© obrigatÃ³rio!"));
-            retorno = false;
-        }
         return retorno;
     }
 
@@ -147,5 +175,31 @@ public class UsuarioControle implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+    
+    public String getSenhaAtual() {
+        return senhaAtual;
+    }
+
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getConfirmaSenha() {
+        return confirmaSenha;
+    }
+
+    public void setConfirmaSenha(String confirmaSenha) {
+        this.confirmaSenha = confirmaSenha;
+    }
+    
 }
 
