@@ -51,7 +51,7 @@ public class UsuarioControle implements Serializable {
         if (validaCampos()) {
             if (!editando) {
                 this.usuarioselecionada = usuarioLogin(usuario.getUsuario());
-                if ( usuarioselecionada !=null || usuarioselecionada.getUsuario().isEmpty() ) {
+                if ( usuarioselecionada == null ) {
                     Autorizacao auto = new Autorizacao(1L, "ROLE_USER");
                     usuario.getAutorizacoes().add(auto);
                     usuario.setEnable(true);
