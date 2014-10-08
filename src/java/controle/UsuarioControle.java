@@ -11,7 +11,6 @@ import entidades.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -47,20 +46,29 @@ public class UsuarioControle implements Serializable {
     private Usuario usuarioselecionada;
     private boolean editando;
 
-    public String salvar() {
+ public String salvar() {
+        String retorno = "usuarioedita";
         if (validaCampos()) {
             if (!editando) {
-                Autorizacao auto = new Autorizacao(1L, "ROLE_USER");
-                usuario.getAutorizacoes().add(auto);
-                usuario.setEnable(true);
-                usuario.setSenha(Util.md5("123mudar"));
+                this.usuarioselecionada = usuarioLogin(usuario.getUsuario());
+                if ( usuarioselecionada !=null || usuarioselecionada.getUsuario().isEmpty() ) {
+                    Autorizacao auto = new Autorizacao(1L, "ROLE_USER");
+                    usuario.getAutorizacoes().add(auto);
+                    usuario.setEnable(true);
+                    usuario.setSenha(Util.md5("123mudar"));
+                    usuarioFacade.save(usuario);
+                    retorno = "usuariolista";
+                } else {
+                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"O usuário informado já existe!", "O usuário informado já existe!"));  
+                }              
+            } else {
+                usuarioFacade.save(usuario);
+                retorno = "usuariolista";
             }
-            usuarioFacade.save(usuario);
-            return "usuariolista";
+            return retorno;
         } else {
-            return "usuarioedita";
+            return retorno;
         }
-
     }
 
     public void novo() {
@@ -107,8 +115,8 @@ public class UsuarioControle implements Serializable {
     }
 
     public List<Usuario> getLista() {
-        return null;
-        //return usuarioFacade.findAll();
+        //return null;
+        return usuarioFacade.findAll();
     }
 
     public void setLista(List<Usuario> lista) {
