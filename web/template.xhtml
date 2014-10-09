@@ -60,9 +60,9 @@
                             <p:commandButton type="button" value="Sistema - CS System" actionListener="/restrito/principal" />  
                         </p:toolbarGroup>  
                         <p:toolbarGroup align="right"> 
-                            <p:menuButton value="#{usuarioLogado.usuarioLogado.usuario}">  
+                            <p:menuButton value="#{usuarioLogado.pegarNomeUsuarioLogado()}">  
                                     <p:menuitem value="Alterar Senha" action="/usuario/usuariosenha" icon="ui-icon-key"/>  
-                                    <p:menuitem value="Sair"          url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" icon="ui-icon-power"/>  
+                                    <p:menuitem value="Sair" url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" icon="ui-icon-power"/>  
                             </p:menuButton>
                         </p:toolbarGroup>  
                     </p:toolbar> 

@@ -29,16 +29,27 @@ public class UsuarioLogado implements Serializable{
         if (context instanceof SecurityContext) {
             Authentication authentication = context.getAuthentication();
             if (authentication instanceof Authentication) {
-                //usuarioLogado.setUsuario(((User) authentication.getPrincipal()).getUsername());
-                System.out.println((authentication.getPrincipal()));
                 this.usuarioLogado.setUsuario(((User) authentication.getPrincipal()).getUsername().toString());
             }
         }
     }
 
+    public String pegarNomeUsuarioLogado(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Usuario retorno = null;
+        if (context instanceof SecurityContext) {
+            Authentication authentication = context.getAuthentication();
+            if (authentication instanceof Authentication) {
+                retorno = usuarioFacade.usuarioLogin(((User) authentication.getPrincipal()).getUsername().toString());
+            }
+        }
+        return retorno.getNome();
+    }
+    
     public void usuarioLogin(String login){
         this.usuarioLogado = usuarioFacade.usuarioLogin(login);
-    }        
+    }
+    
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }

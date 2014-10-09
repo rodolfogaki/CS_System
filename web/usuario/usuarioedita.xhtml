@@ -5,10 +5,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
+    
     <ui:composition template="/template.xhtml">
         <ui:define name="body">
             <p:panel header="Cadastro de Usuario">
-                <h:form id="formulario">                    
+                <h:form id="formulario">
+                    <p:focus for="nome"/>
                     <p:messages showDetail="false"/>
                     <h:inputHidden id="cod" value="#{usuarioControle.usuario.id}" />
                     <h:panelGrid columns="2">

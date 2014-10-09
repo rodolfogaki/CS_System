@@ -14,14 +14,14 @@
 
     <h:body>
         <p:dialog header="Login"
-                modal="false" closable="false" position="center"
-                widgetVar="modalLogin" minWidth="300" width="300" showEffect="fade"
-                draggable="false" resizable="false" visible="true">
+                  modal="false" closable="false" position="center"
+                  widgetVar="modalLogin" minWidth="300" width="300" showEffect="fade"
+                  draggable="false" resizable="false" visible="true">
 
             <center>
                 <h:outputText value="Usuário e/ou senha inválidos!"
-                        rendered="#{param.error}"
-                        style="color:darkred; font-size: 14px; padding-bottom: 10px;" />
+                              rendered="#{param.error}"
+                              style="color:darkred; font-size: 14px; padding-bottom: 10px;" />
 
                 <form action="j_spring_security_check" method="post">
                     <p:focus for="j_username"/>
