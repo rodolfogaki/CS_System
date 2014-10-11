@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+    <h:head>
+        <title>Sistema de Fecularia</title>
+
+        <h:outputScript library="js" name="/mascaraMonetaria/Parsers.js" />
+        <h:outputScript library="js" name="/mascaraMonetaria/JavaScriptUtil.js" />
+        <h:outputScript library="js" name="/mascaraMonetaria/InputMask.js" />
+
+        <script language="JavaScript">  
+            function mascaraMonetaria(arg) {
+                //Set up the NumberMasks
+                var separadorDecimal = ",";
+                var separadorMilhar = ".";
+                        
+                var formato = new NumberParser(2, separadorDecimal, separadorMilhar, true);
+                formato.currencySymbol = "R$";
+                formato.useCurrency = true;
+                formato.allowNegative = false;
+                formato.currencyInside = true;
+                                        
+                if (arg.className.indexOf('mascaraMonetaria') == -1){
+                    var mascaraMonetariaFinal = new NumberMask(formato, arg, 20);
+                    mascaraMonetariaFinal.leftToRight = true;
+                    arg.setAttribute('autocomplete','off');
+                    arg.className += ' mascaraMonetaria';                        
+                }
+            } 
+        </script> 
+        <style type="text/css">
+            .ui-widget {
+                font-size: 75%;
+            }
+            .wijmo-wijmenu { 
+                border: 0px; width: 240px; padding: 1px;
+            }
+            .wijmo-wijmenu-breadcrumb, .wijmo-wijmenu-footer{
+
+                margin-bottom: 10%;
+            }
+            
+            .ui-layout-pane-north {
+                visibility: hidden !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+            <p:layoutUnit position="north" resizable="true" closable="false" collapsible="false" size="55">  
+                <h:form>
+                    <p:toolbar>  
+                        <p:toolbarGroup align="left">  
+                            <p:commandButton type="button" value="Sistema - CS System" actionListener="/restrito/principal" />  
+                        </p:toolbarGroup>  
+                        <p:toolbarGroup align="right"> 
+                            <p:menuButton value="#{usuarioLogado.pegarNomeUsuarioLogado()}">  
+                                    <p:menuitem value="Alterar Senha" action="/usuario/usuariosenha" icon="ui-icon-key"/>  
+                                    <p:menuitem value="Sair" url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" icon="ui-icon-power"/>  
+                            </p:menuButton>
+                        </p:toolbarGroup>  
+                    </p:toolbar> 
+                </h:form>  
+
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="south" size="30" style="text-align: center">  
+                    <h:outputText value="Copyright ® 2002-2014 - Todos os direitos reservados" />         
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="west" size="180" header="Menu" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+
+                    <p:panelMenu style="width:170px">  
+                        <p:submenu label="Cadastros" style="">  
+                            <p:menuitem value="Pessoa" action="/pessoa/pessoalista" actionListener="#{pessoaControle.limpadados}" ajax="false"/>                              
+                            <p:menuitem value="Produto" action="/produto/produtolista" ajax="false"/>                                                         
+                            <p:menuitem value="Cidade" action="/cidade/cidadelista" ajax="false"/>                              
+                            <p:menuitem value="Empresa" action="/empresa/empresalista" ajax="false"/>                              
+                            <p:menuitem value="Banco" action="/banco/bancolista" ajax="false"/>                              
+                            <p:menuitem value="AgÃªncia" action="/agencia/agencialista" ajax="false"/>                              
+                            <p:menuitem value="Conta Corrente" action="/contacorrente/contacorrentelista" ajax="false"/>                              
+                        </p:submenu>  
+                        <p:submenu label="Movimentos">  
+                            <p:menuitem value="Compra" action="/compra/compralista" ajax="false"/>                                                          
+                            <p:menuitem value="Venda" action="/venda/vendalista" ajax="false"/>                                                          
+                            <p:menuitem value="Despesa" action="/despesa/despesalista" ajax="false"/>                                                          
+                            <p:menuitem value="Receita" action="/receita/receitalista" ajax="false"/>                                                          
+                        </p:submenu>  
+                        <p:submenu label="RelatÃ³rios" >  
+                            <p:menuitem value="Clientes" action="/relatorio/clientes" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
+                            <p:menuitem value="Fornecedores" action="/relatorio/fornecedores" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
+                            <p:menuitem value="Compras" action="/relatorio/compras" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
+                            <p:menuitem value="Vendas" action="/relatorio/vendas" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
+                            <p:menuitem value="Despesas" action="/relatorio/despesas" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
+                            <p:menuitem value="Receitas" action="/relatorio/receitas" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                                                          
+                        </p:submenu> 
+                        <sec:ifAnyGranted roles="ROLE_ADM">
+                            <p:submenu label="Administrativo" style="">  
+                                <p:menuitem value="UsuÃ¡rio" action="/admin/usuario/usuariolista" ajax="false"/>                              
+                            </p:submenu>  
+                        </sec:ifAnyGranted>    
+                    </p:panelMenu>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">                  
+                <ui:insert id="corpo" name="body">Seja bem vindo #{request.remoteUser}! #{usuarioLogado.usuarioLogado.nome}</ui:insert>          
+            </p:layoutUnit>  
+
+        </p:layout> 
+    </h:body>
+</html>
+

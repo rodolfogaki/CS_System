@@ -101,7 +101,7 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>template.xhtml</welcome-file>
+        <welcome-file>restrito/template.xhtml</welcome-file>
     </welcome-file-list>
 
     <context-param> 

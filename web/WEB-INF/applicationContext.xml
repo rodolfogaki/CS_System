@@ -10,11 +10,11 @@
     <http auto-config="true" access-denied-page="/negado.xhtml">
         
         
-        <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?error=true" />
-        <logout logout-success-url="/login.xhtml" /> 
+        <form-login login-page="/publico/login.xhtml" authentication-failure-url="/publico/login.xhtml?error=true" />
+        <logout logout-success-url="/publico/login.xhtml" /> 
         <!--<intercept-url pattern="/**" access="ROLE_USER" />-->       
-        <intercept-url pattern="/template.xhtml" access="ROLE_USER" /> 
-        <intercept-url pattern="/usuario/**" access="ROLE_ADM" />
+        <intercept-url pattern="/restrito/**" access="ROLE_USER" /> 
+        <intercept-url pattern="/admin/**" access="ROLE_ADM" />
 
     </http>
 
