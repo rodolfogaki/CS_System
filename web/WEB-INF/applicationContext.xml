@@ -13,7 +13,8 @@
         <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?error=true" />
         <logout logout-success-url="/login.xhtml" /> 
         <!--<intercept-url pattern="/**" access="ROLE_USER" />-->       
-        <intercept-url pattern="/template.xhtml" access="ROLE_USER" />       
+        <intercept-url pattern="/template.xhtml" access="ROLE_USER" /> 
+        <intercept-url pattern="/usuario/**" access="ROLE_ADM" />
 
     </http>
 

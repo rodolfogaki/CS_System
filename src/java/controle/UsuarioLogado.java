@@ -23,7 +23,7 @@ public class UsuarioLogado implements Serializable{
     private UsuarioFacade usuarioFacade;
     
     private Usuario usuarioLogado = new Usuario(); 
-    
+    /*
     public UsuarioLogado() {
         SecurityContext context = SecurityContextHolder.getContext();
         if (context instanceof SecurityContext) {
@@ -33,17 +33,20 @@ public class UsuarioLogado implements Serializable{
             }
         }
     }
-
+    */
     public String pegarNomeUsuarioLogado(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        Usuario retorno = null;
-        if (context instanceof SecurityContext) {
-            Authentication authentication = context.getAuthentication();
-            if (authentication instanceof Authentication) {
-                retorno = usuarioFacade.usuarioLogin(((User) authentication.getPrincipal()).getUsername().toString());
+        SecurityContext context = SecurityContextHolder.getContext();       
+            if (context instanceof SecurityContext) {
+                Authentication authentication = context.getAuthentication();
+                
+                if (authentication instanceof Authentication) {
+                    if ((!((User) authentication.getPrincipal()).getUsername().toString().equals(usuarioLogado.getUsuario())) || (usuarioLogado == null )) {
+                        usuarioLogado = usuarioFacade.usuarioLogin(((User) authentication.getPrincipal()).getUsername().toString());
+                    }
+                }
             }
-        }
-        return retorno.getNome();
+        
+        return usuarioLogado.getNome();
     }
     
     public void usuarioLogin(String login){
