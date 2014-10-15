@@ -5,6 +5,7 @@
 package dao;
 
 import entidades.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -39,5 +40,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         } catch ( NoResultException nre ) {  
             return null;  
         }      
+    }
+    
+    public List<Usuario> filtroPorNome(String nome){
+        Query q = getEntityManager().createQuery(" from Usuario usu where upper(usu.nome) like :nome");
+        q.setParameter("nome", "%" + nome.toUpperCase() + "%");
+        return q.getResultList();
+        
     }
 }

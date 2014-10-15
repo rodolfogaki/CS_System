@@ -101,9 +101,10 @@
                             <p:menuitem value="Despesas" action="/relatorio/despesas" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                          
                             <p:menuitem value="Receitas" action="/relatorio/receitas" actionListener="#{relatorioControle.limpaFiltros}" ajax="false"/>                                                                                          
                         </p:submenu> 
-                        <sec:ifAnyGranted roles="ROLE_ADM">
+                        <sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
                             <p:submenu label="Administrativo" style="">  
-                                <p:menuitem value="UsuÃ¡rio" action="/admin/usuario/usuariolista" ajax="false"/>                              
+                                <p:menuitem value="Usuário" action="/admin/usuario/usuariolista" ajax="false"/>
+                                <p:menuitem value="Usuário" action="/admin/usuario/usuariolistaper" ajax="false"/>
                             </p:submenu>  
                         </sec:ifAnyGranted>    
                     </p:panelMenu>

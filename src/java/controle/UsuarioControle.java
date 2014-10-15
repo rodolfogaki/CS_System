@@ -42,11 +42,21 @@ public class UsuarioControle implements Serializable {
     @EJB
     private AutorizacaoFacade autorizacaoFacade;
     private List<Usuario> lista = new ArrayList<Usuario>();
+    private List<Usuario> listaPorNome = new ArrayList<Usuario>();
+    private String nomeUsuario;
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
     private String filtro = "";
     private Usuario usuarioselecionada;
     private boolean editando;
 
- public String salvar() {
+    public String salvar() {
         String retorno = "usuarioedita";
         if (validaCampos()) {
             if (!editando) {
@@ -117,6 +127,18 @@ public class UsuarioControle implements Serializable {
     public List<Usuario> getLista() {
         //return null;
         return usuarioFacade.findAll();
+    }
+
+    public List<Usuario> getListaPorNome() {
+        return listaPorNome;
+    }
+
+    public void setListaPorNome(List<Usuario> listaPorNome) {
+        this.listaPorNome = listaPorNome;
+    }
+    
+    public void consultaPorNome (){
+        this.listaPorNome = usuarioFacade.filtroPorNome(nomeUsuario);
     }
 
     public void setLista(List<Usuario> lista) {

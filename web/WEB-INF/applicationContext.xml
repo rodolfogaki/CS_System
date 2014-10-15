@@ -6,15 +6,15 @@
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security
 						http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+    
 
     <http auto-config="true" access-denied-page="/negado.xhtml">
         
         
         <form-login login-page="/publico/login.xhtml" authentication-failure-url="/publico/login.xhtml?error=true" />
-        <logout logout-success-url="/publico/login.xhtml" /> 
-        <!--<intercept-url pattern="/**" access="ROLE_USER" />-->       
-        <intercept-url pattern="/restrito/**" access="ROLE_USER" /> 
-        <intercept-url pattern="/admin/**" access="ROLE_ADM" />
+        <logout logout-success-url="/publico/login.xhtml" />  
+        <intercept-url pattern="/restrito/**" access="ROLE_USUARIO" /> 
+        <intercept-url pattern="/admin/**" access="ROLE_ADMINISTRADOR" />
 
     </http>
 
@@ -32,5 +32,10 @@
         <b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <b:property name="username" value="root" />
         <b:property name="password" value="" />
+        
+        
     </b:bean>
+
 </b:beans>
+    
+
